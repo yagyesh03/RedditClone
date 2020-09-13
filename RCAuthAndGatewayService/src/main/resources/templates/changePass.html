@@ -1,0 +1,45 @@
+<html>
+<body>
+<div>
+ 
+ <form id="form" onsubmit="return false;">
+    <label>NEW PASSWORD</label> 
+    <input type="text" id="pass" />
+    
+    <br>
+    <br>
+    <br>
+    
+    <label>TOKEN</label>
+    <input type="text" id="token" />
+    <input type="submit" onclick="othername();" />
+</form>
+
+<script>
+
+	var HttpClient = function() {
+	    this.get = function(aUrl, aCallback) {
+	        var anHttpRequest = new XMLHttpRequest();
+	        anHttpRequest.onreadystatechange = function() { 
+	            if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
+	                aCallback(anHttpRequest.responseText);
+	        }
+	
+	        anHttpRequest.open( "GET", aUrl, true );            
+	        anHttpRequest.send( null );
+	    }
+	}
+	
+
+	function othername() {
+	    var pass = document.getElementById("pass").value;
+	    var token = document.getElementById("token").value;
+	    var client = new HttpClient();
+		client.get("http://localhost:7503/auth/user/savePassword/"+pass+"/"+token, function(response) {
+		    alert(response);
+		});
+	}
+</script>
+</div>
+</body>
+</html>
